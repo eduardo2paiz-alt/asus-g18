@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASUS ROG Strix SCAR G18 | Centro Técnico y Rendimiento</title>
+  <style>
+    :root {
+      --bg-dark: #0b0c10;
+      --bg-card: #14161f;
+      --bg-card-hover: #1b1e2b;
+      --rog-red: #ff003c;
+      --rog-red-dark: #b8002b;
+      --rog-cyan: #00f0ff;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border-color: #262a3a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(255, 0, 60, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(0, 240, 255, 0.07) 0%, transparent 40%);
+    }
+
+    /* ================= MENÚ DINÁMICO EN CSS PURO ================= */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(11, 12, 16, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid var(--rog-red);
+      box-shadow: 0 4px 25px rgba(255, 0, 60, 0.15);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, var(--rog-red), var(--rog-red-dark));
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+      box-shadow: 0 0 12px rgba(255, 0, 60, 0.5);
+    }
+
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 10px 16px;
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 16px;
+      right: 16px;
+      height: 2px;
+      background: var(--rog-cyan);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--rog-cyan);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-link:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* Submenú desplegable dinámico (CSS puro) */
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 230px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-top: 2px solid var(--rog-cyan);
+      border-radius: 0 0 8px 8px;
+      list-style: none;
+      padding: 8px 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px);
+      transition: all 0.25s ease;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .nav-item:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 18px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+
+    .dropdown-menu a:hover {
+      background: rgba(0, 240, 255, 0.08);
+      color: var(--rog-cyan);
+      padding-left: 24px;
+    }
+
+    /* Control menú móvil sin JavaScript */
+    #menu-toggle {
+      display: none;
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .hamburger span {
+      width: 26px;
+      height: 3px;
+      background: var(--text-main);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* ================= HERO SECTION ================= */
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 24px 60px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      color: var(--rog-cyan);
+      border: 1px solid rgba(0, 240, 255, 0.4);
+      background: rgba(0, 240, 255, 0.06);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: 2.9rem;
+      line-height: 1.15;
+      margin-bottom: 18px;
+      font-weight: 800;
+    }
+
+    .hero h1 span {
+      color: var(--rog-red);
+      text-shadow: 0 0 20px rgba(255, 0, 60, 0.35);
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.08rem;
+      margin-bottom: 28px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--rog-red), var(--rog-red-dark));
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 18px rgba(255, 0, 60, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(255, 0, 60, 0.55);
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--rog-cyan);
+      color: var(--rog-cyan);
+      padding: 12px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(0, 240, 255, 0.1);
+    }
+
+    .hero-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--rog-red);
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+    }
+
+    .hero-panel h3 {
+      font-size: 1.1rem;
+      color: var(--rog-cyan);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+
+    .stat-row:last-child {
+      border-bottom: none;
+    }
+
+    .stat-label {
+      color: var(--text-muted);
+    }
+
+    .stat-val {
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* ================= SECCIONES GENERALES ================= */
+    section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+
+    .section-header {
+      margin-bottom: 36px;
+      border-left: 4px solid var(--rog-red);
+      padding-left: 16px;
+    }
+
+    .section-header h2 {
+      font-size: 2rem;
+      margin-bottom: 6px;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+    }
+
+    /* ================= INFORMACIÓN BÁSICA (SPECS) ================= */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+    }
+
+    .spec-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 24px;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .spec-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--rog-cyan);
+      background: var(--bg-card-hover);
+    }
+
+    .spec-icon {
+      display: inline-block;
+      background: rgba(255, 0, 60, 0.14);
+      color: var(--rog-red);
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      margin-bottom: 14px;
+    }
+
+    .spec-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .spec-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* ================= PROBLEMAS Y SOLUCIONES ================= */
+    .troubleshoot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .issue-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .issue-problem {
+      background: rgba(255, 0, 60, 0.1);
+      border-bottom: 1px solid rgba(255, 0, 60, 0.25);
+      padding: 18px 22px;
+    }
+
+    .badge-problem {
+      display: inline-block;
+      background: var(--rog-red);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .issue-problem h3 {
+      font-size: 1.12rem;
+      color: #fff;
+    }
+
+    .issue-solution {
+      padding: 20px 22px;
+      flex-grow: 1;
+    }
+
+    .badge-solution {
+      display: inline-block;
+      background: rgba(0, 240, 255, 0.15);
+      color: var(--rog-cyan);
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .issue-solution p {
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      margin-bottom: 10px;
+    }
+
+    .issue-solution ul {
+      padding-left: 18px;
+      color: var(--text-main);
+      font-size: 0.92rem;
+    }
+
+    .issue-solution li {
+      margin-bottom: 6px;
+    }
+
+    /* ================= FOOTER ================= */
+    footer {
+      background: #07080b;
+      border-top: 2px solid var(--border-color);
+      margin-top: 50px;
+      padding: 45px 24px 25px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .footer-col h4 {
+      color: var(--rog-cyan);
+      font-size: 1.05rem;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .footer-col p, .footer-col li {
+      color: var(--text-muted);
+      font-size: 0.93rem;
+      list-style: none;
+      margin-bottom: 8px;
+    }
+
+    .footer-col a {
+      color: var(--text-main);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover {
+      color: var(--rog-red);
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 20px auto 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 860px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 45px;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-menu {
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        background: var(--bg-card);
+        flex-direction: column;
+        align-items: stretch;
+        padding: 16px 24px;
+        border-bottom: 2px solid var(--rog-red);
+        display: none;
+      }
+
+      #menu-toggle:checked ~ .nav-menu {
+        display: flex;
+      }
+
+      .dropdown-menu {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        box-shadow: none;
+        border: none;
+        border-left: 2px solid var(--rog-cyan);
+        margin-left: 16px;
+        background: transparent;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MENÚ DE NAVEGACIÓN DINÁMICO -->
+  <header>
+    <div class="nav-container">
+      <a href="#inicio" class="brand">
+        <span class="brand-badge">ROG</span>
+        <span>ASUS Strix SCAR G18</span>
+      </a>
+
+      <input type="checkbox" id="menu-toggle">
+      <label for="menu-toggle" class="hamburger" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="#inicio" class="nav-link">Inicio</a></li>
+        <li class="nav-item">
+          <a href="#info-basica" class="nav-link">Información Básica ▾</a>
+          <ul class="dropdown-menu">
+            <li><a href="#info-basica">Procesador y Gráficos</a></li>
+            <li><a href="#info-basica">Pantalla Nebula 18"</a></li>
+            <li><a href="#info-basica">Refrigeración Tri-Fan</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#problemas-soluciones" class="nav-link">Problemas y Soluciones ▾</a>
+          <ul class="dropdown-menu">
+            <li><a href="#problema-termico">Temperaturas en Carga</a></li>
+            <li><a href="#problema-bateria">Autonomía y Modos Energía</a></li>
+            <li><a href="#problema-drivers">Drivers y Armoury Crate</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a href="#contacto" class="nav-link">Contacto</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- PORTADA / HERO -->
+  <div id="inicio" class="hero">
+    <div>
+      <span class="hero-tag">Workstation & Gaming Extremo</span>
+      <h1>ASUS ROG Strix <span>SCAR G18</span></h1>
+      <p>
+        Potencia de escritorio en formato portátil de 18 pulgadas. Diseñada para renderizado 3D pesado,
+        edición de video en alta tasa de cuadros, virtualización de servidores y gaming competitivo de élite.
+      </p>
+      <div class="hero-buttons">
+        <a href="#info-basica" class="btn-primary">Explorar Arquitectura</a>
+        <a href="#problemas-soluciones" class="btn-secondary">Guía de Soluciones</a>
+      </div>
+    </div>
+
+    <div class="hero-panel">
+      <h3>Ficha Rápida del Equipo</h3>
+      <div class="stat-row">
+        <span class="stat-label">Procesador</span>
+        <span class="stat-val">Intel Core i9 (Serie HX)</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Tarjeta Gráfica</span>
+        <span class="stat-val">NVIDIA GeForce RTX 5080</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Memoria RAM</span>
+        <span class="stat-val">32 GB DDR5 Dual-Channel</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Almacenamiento</span>
+        <span class="stat-val">2 TB SSD NVMe PCIe 4.0</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Panel</span>
+        <span class="stat-val">18" QHD+ 240Hz Nebula</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- INFORMACIÓN BÁSICA -->
+  <section id="info-basica">
+    <div class="section-header">
+      <h2>Información Básica y Arquitectura</h2>
+      <p>Componentes clave que definen el rendimiento de la serie ASUS ROG Strix G18.</p>
+    </div>
+
+    <div class="specs-grid">
+      <div class="spec-card">
+        <span class="spec-icon">CPU & GPU</span>
+        <h3>Potencia Híbrida de Alto Calibre</h3>
+        <p>
+          Equipada con procesadores Intel Core i9 de alto voltaje y gráficos NVIDIA GeForce RTX con soporte
+          para MUX Switch y NVIDIA Advanced Optimus, permitiendo enviar cuadros directo a la pantalla sin cuello de botella.
+        </p>
+      </div>
+
+      <div class="spec-card">
+        <span class="spec-icon">DISPLAY</span>
+        <h3>Pantalla ROG Nebula de 18"</h3>
+        <p>
+          Relación de aspecto 16:10 con resolución QHD+ (2560 x 1600), frecuencia de actualización de 240 Hz,
+          tiempo de respuesta de 3 ms y cobertura del 100 % del espacio de color DCI-P3 para edición profesional.
+        </p>
+      </div>
+
+      <div class="spec-card">
+        <span class="spec-icon">COOLING</span>
+        <h3>Refrigeración Inteligente Tri-Fan</h3>
+        <p>
+          Integra tres ventiladores Arc Flow, un disipador de ancho completo en la parte trasera y compuesto
+          de metal líquido Conductonaut Extreme sobre CPU y GPU para mantener frecuencias sostenidas.
+        </p>
+      </div>
+
+      <div class="spec-card">
+        <span class="spec-icon">EXPANSIÓN</span>
+        <h3>Conectividad y Actualización</h3>
+        <p>
+          Cuenta con doble ranura SO-DIMM DDR5, dos bahías M.2 PCIe 4.0 NVMe de fácil acceso, puertos
+          Thunderbolt 4, HDMI 2.1, Ethernet RJ45 de 2.5 Gbps y Wi-Fi 6E/7 de baja latencia.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEMAS Y SOLUCIONES -->
+  <section id="problemas-soluciones">
+    <div class="section-header">
+      <h2>Problemas Comunes y Soluciones Técnicas</h2>
+      <p>Diagnóstico práctico y optimización para mantener el equipo operando al máximo nivel.</p>
+    </div>
+
+    <div class="troubleshoot-grid">
+      <!-- Caso 1 -->
+      <article id="problema-termico" class="issue-card">
+        <div class="issue-problem">
+          <span class="badge-problem">Problema 01</span>
+          <h3>Picos de temperatura en CPU bajo cargas prolongadas</h3>
+        </div>
+        <div class="issue-solution">
+          <span class="badge-solution">Solución Recomendada</span>
+          <p>
+            Los procesadores Intel HX alcanzan frecuencias turbo muy altas que generan calor instantáneo en renderizado o juegos pesados.
+          </p>
+          <ul>
+            <li><strong>Base elevada:</strong> Usa un soporte que eleve la parte trasera 3 a 5 cm para liberar la toma de aire inferior.</li>
+            <li><strong>Curva manual:</strong> En Armoury Crate o G-Helper, configura un perfil manual limitando el PL1/PL2 a 80W-95W sin perder FPS.</li>
+            <li><strong>Limpieza preventiva:</strong> Retira el polvo de los filtros de los 3 ventiladores cada 4 meses con aire comprimido.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Caso 2 -->
+      <article id="problema-bateria" class="issue-card">
+        <div class="issue-problem">
+          <span class="badge-problem">Problema 02</span>
+          <h3>Consumo acelerado de batería en movilidad</h3>
+        </div>
+        <div class="issue-solution">
+          <span class="badge-solution">Solución Recomendada</span>
+          <p>
+            Si la GPU dedicada RTX permanece activa mientras trabajas desenchufado, la batería de 90 Wh se descargará rápidamente.
+          </p>
+          <ul>
+            <li><strong>Modo Eco en GPU:</strong> Activa el modo <em>Eco</em> para apagar por completo la GPU NVIDIA cuando uses batería.</li>
+            <li><strong>Tasa de refresco:</strong> Cambia la pantalla de 240 Hz a 60 Hz automáticamente al desconectar el cargador.</li>
+            <li><strong>Salud de batería:</strong> Limita la carga máxima al 80 % en MyASUS si la usas conectada la mayor parte del día.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Caso 3 -->
+      <article id="problema-drivers" class="issue-card">
+        <div class="issue-problem">
+          <span class="badge-problem">Problema 03</span>
+          <h3>Parpadeo breve al cambiar entre GPU integrada y dedicada</h3>
+        </div>
+        <div class="issue-solution">
+          <span class="badge-solution">Solución Recomendada</span>
+          <p>
+            Ocurre cuando NVIDIA Advanced Optimus conmuta dinámicamente la salida de video al abrir una aplicación 3D o editor.
+          </p>
+          <ul>
+            <li><strong>Comportamiento normal:</strong> El congelamiento de 1 segundo indica que el MUX Switch está conectando la RTX directo al panel.</li>
+            <li><strong>Modo fijo:</strong> Si vas a editar video o jugar por horas, fija el modo <em>Ultimate</em> para evitar cambios automáticos.</li>
+            <li><strong>Controladores limpios:</strong> Mantén actualizados los drivers NVIDIA Studio/Game Ready y el chipset Intel desde el soporte oficial de ASUS.</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- FOOTER CON INFORMACIÓN DE CONTACTO -->
+  <footer id="contacto">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>ASUS ROG Strix SCAR G18</h4>
+        <p>
+          Portal técnico informativo dedicado a la arquitectura, rendimiento y mantenimiento preventivo
+          de portátiles entusiastas de alto desempeño.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navegación Rápida</h4>
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#info-basica">Especificaciones y Arquitectura</a></li>
+          <li><a href="#problemas-soluciones">Problemas y Soluciones</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Información de Contacto</h4>
+        <ul>
+          <li><strong>Autor:</strong> Wilber Eduardo Paiz</li>
+          <li><strong>Carrera:</strong> Ingeniería en Desarrollo de Software (UNIVO)</li>
+          <li><strong>Correo:</strong> <a href="mailto:eduardo2paiz@gmail.com">eduardo2paiz@gmail.com</a></li>
+          <li><strong>GitHub:</strong> <a href="https://github.com/eduardo2paiz-alt" target="_blank">github.com/eduardo2paiz-alt</a></li>
+          <li><strong>Ubicación:</strong> San Miguel, El Salvador</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Wilber Eduardo Paiz — Práctica de Implementación Web en Windows Server IIS (GrupoE).</p>
+    </div>
+  </footer>
+
+</body>
+</html>
